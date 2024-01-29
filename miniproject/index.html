@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+    hr{
+        border-top: 9px dotted purple;
+    }
+        body{
+            background-color: rgb(233, 175, 194);
+            font-size: 16px;
+            font-family: "Lucida Console", "Courier New", monospace;
+        }
+        h1{
+            font-size: 50px;
+        }
+        h2, h3{
+            font-size: 30px;
+        }
+        p, li{
+            font-size: 20px;
+        }
+        button{
+            background-color: black;
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            font-size: 16px;  
+        }
+
+        * {box-sizing: border-box;}
+        .img-comp-container {
+          position: relative;
+          height: 500px; 
+        }
+        .img-comp-img {
+          position: absolute;
+          width: auto;
+          height: auto;
+          overflow:hidden;
+        }
+        .img-comp-img img {
+          display:block;
+        }
+        .img-comp-slider {
+          position: absolute;
+          z-index:9;
+          cursor: ew-resize;
+          width: 30px;
+          height: 30px;
+          background-color: black;
+          opacity: 0.7;
+          border-radius: 50%;
+        }
+        </style>
+        <script>
+            
+        function initComparisons() {
+          var x, i;
+          x = document.getElementsByClassName("img-comp-overlay");
+          for (i = 0; i < x.length; i++) {
+            compareImages(x[i]);
+          }
+          function compareImages(img) {
+            var slider, img, clicked = 0, w, h;
+            w = img.offsetWidth;
+            h = img.offsetHeight;
+            slider = document.createElement("DIV");
+            slider.setAttribute("class", "img-comp-slider");
+            img.parentElement.insertBefore(slider, img);
+            slider.style.top = (h/2) - (slider.offsetHeight / 2) + "px";
+            slider.style.left = (w/2) - (slider.offsetWidth / 2) + "px";
+            slider.addEventListener("mousedown", slideReady);
+            window.addEventListener("mouseup", slideFinish);
+            function slideReady(e) {
+              clicked = 1;
+              window.addEventListener("mousemove", slideMove);
+              window.addEventListener("touchmove", slideMove);
+            }
+            function slideFinish() {
+              clicked = 0;
+            }
+            function slideMove(e) {
+              var pos;
+              if (clicked == 0) return false;
+              pos = getCursorPos(e)
+              if (pos < 0) pos = 0;
+              if (pos > w) pos = w;
+              slide(pos);
+            }
+            function getCursorPos(e) {
+              var a, x = 0;
+              e = (e.changedTouches) ? e.changedTouches[0] : e;
+              a = img.getBoundingClientRect();
+              x = e.pageX - a.left;
+              x = x - window.pageXOffset;
+              return x;
+            }
+            function slide(x) {
+              img.style.width = x + "px";
+              slider.style.left = img.offsetWidth - (slider.offsetWidth / 2) + "px";
+            }
+          }
+        }
+        </script>
+</head>
+<body>
+
+    <h1>MINIPROJECT FOR INTO TO MULTIMEDIA</h1>
+    <h2> <small> Kamryn Dudwal</small></h2>
+    <h3>Using <a href="https://svgedit.netlify.app/editor/index.html"> SVG Edit</a></h3>
+    <embed src="https://svgedit.netlify.app/editor/index.html" style="width: 1000px; height: 600px;">
+        <h3> This demo will show you how to use <a href="https://svgedit.netlify.app/editor/index.html">SVG Edit.</a> </h3> 
+        <ul>
+            <li>SVG edit can be used to create new graphics, and edit/enhance a photo or image. </li>
+            <li>You will create an image like the one below and then test to ensure both images are the same.</li>
+            <li>First click on the rectangle on the left sidebar and draw a rectangle on the canvas. </li>
+            <li>Now ensure the x and y, located on the top toolbar when the rectangle is clicked, has the values of x=80 and y=100 and w=300 and h=150</li>
+            <li>Now click on the circle icon in the left sidebar and draw a circle/ellipse on the canvas. </li>
+            <li>Now ensure the cx and cy, located on the top toolbar when the rectangle is clicked, has the values of cx=500 and cy=350 and rx=90 and ry=90</li>
+            <li>Changing the color, click on the shape then click the bucket in the lower left corner</li>
+            <li>change the color of the rectangle to a light blue and the circle to a pale yellow</li>
+            <li>Save your image by clicking svg-edit in the top left corner and then save, then add it to the folder containing this code.</li>
+            <li>Upload your image into the selected place in the html code</h4></li>
+            <li>Now use the slider to ensure your image is the same as the image that already appears.</li>
+            <li>There is an example image with red shapes that shows how it works and how to recognize the similarities.</li>
+            <li> <small>To help me create the slider I used information from <a href="https://www.w3schools.com/howto/howto_js_image_comparison.asp">this website.</a> </small> </li>
+        </ul>
+        <hr>
+        <h3>Check Your Image</h3>
+        <p>There is already an example on how the slider works, move the black circle in the middle left and right once you exchange the current image for your own.</p>
+        <div class="img-comp-container" >
+            <div class="img-comp-img">
+              <img position="relative" src="compare.svg" width="900" height="600">
+            </div>
+            <div class="img-comp-img img-comp-overlay">
+                <!-- ADD YOUR IMAGE TO BE COMPARED HERE -->
+              <img position="relative" src="compare2.svg" width="900" height="600">
+            </div>
+          </div>
+          <br><br><br><br> <hr>
+          <h3>Using HTML5 Canvas</h3>
+          <p>Click the draw button to see a face being made.</p>
+          <p>Then click the button for each of the different facial features to choose what color each should be.</p>
+          <p>Remember to press DRAW before changing the color of the eyes or nose.</p>
+          <p>When a button is pressed, this sends the HTML to the JS and computes the JS, in this case the JS is using the canvas that was made in HTML todraw the head, using .arc, then the eyes and nose also using .arc.</p>
+          <p>The mouth uses .quadraticCurveTo in order to create a smiling effect. The colors follow the traditional rgb format.</p>
+          <canvas id="face" style="width: 1000px; height: 600px;"> Your browser does not support the HTML canvas tag.</canvas>
+        <button type="button" onclick="start()">DRAW</button>
+        <button type="button" onclick="eyecolor()">EYES</button>
+        <button type="button" onclick="nosecolor()">NOSE</button>
+        <button type="button" onclick="reset()">RESET</button>
+        <br><br><hr>
+        <h3>Animation in HTML5 Canvas</h3>
+        <p>This is a very simple animation of a ball going across the screen however it is very important to understand what is going on because this type of code and animations are used in many different places like games and website development.</p>
+        <p>In this code the balls are drawn the same way the face above was. To get the ball to move the x position value is being incremented by a certain value until the ball reaches the end of the page.</p>  
+        <p>We know it isn't on the page by using a simple if statement to check the position of the balls. </p> 
+        <canvas id="animation_id" width="1000px;" height="300px;"></canvas>
+        <button type="button" onclick="resetAnimation()">RESET</button>
+        <hr>
+        <h3>Summary</h3>
+        <ul>
+            <li>I have showed the user how to create their own image using SVG Edit</li>
+            <li>Then using a slider tool to ensure they can create the same image I created, I used <a href="https://www.w3schools.com/howto/howto_js_image_comparison.asp">this</a> websites code to help create this effect</li>
+            <li>I demonstrated using buttons and creating an image using HTML5 Canvas</li>
+            <li>This allowed the user to create their own face by choosing which eye and nose color they wanted</li>
+            <li>The last part of this page was the animation which looks like a race between the yellow and orange balls to show the user how animation might work in canvas</li>
+            <li>There is also a button to reset the race and see the animation again</li>
+            <li>Some of the resources that helped with this project were <a href="https://www.w3schools.com">w3schools</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/SVG">Modzilla</a>, and <a href="https://stackoverflow.com">Stack Overflow</a> </li>
+        </ul>
+        <h3>References</h3>
+        <ul>
+            <li><a href="https://www.w3schools.com">w3schools</a>
+            <li> <a href="https://developer.mozilla.org/en-US/docs/Web/SVG">Modzilla</a></li>
+            <li><a href="https://stackoverflow.com">Stack Overflow</a> </li></li>
+            <li><a href="https://www.w3schools.com/howto/howto_js_image_comparison.asp">w3schools: Slider effect</a></li>
+        </ul>
+
+         
+         <script type='text/javascript'>
+            initComparisons();
+        </script>
+
+        <script type='text/javascript'>
+            //CREATING THE FACE AND CHANGING THE COLORS
+            let count =0;
+            let countnose=0; 
+            let counteye = 0;
+            let face_cnv = document.getElementById('face');
+            let face_ctx = face_cnv.getContext('2d');
+            face_ctx.fillStyle = 'rgb(173,216,230)';
+            face_ctx.fillRect(0, 0, face_cnv.width, face_cnv.height);
+            face_ctx.fillStyle = 'rgb(0,0,0)';   
+
+            function start(){
+                let width = face_cnv.width;
+                let height = face_cnv.height;
+                if(count==0){
+                    face_ctx.fillStyle = 'rgb(248,129,88)';
+                    face_ctx.beginPath();
+                    face_ctx.arc(width/2, height/2, width/4, 0, 2*Math.PI);
+                    face_ctx.fill();
+                    face_ctx.stroke();
+                }else if(count==1){
+                    face_ctx.fillStyle = 'rgb(0,0,0)';
+                    face_ctx.beginPath();
+                    face_ctx.arc(width/2-25, height/2-40, 5, 0, 2*Math.PI);
+                    face_ctx.fill();
+                    face_ctx.beginPath();
+                    face_ctx.arc(width/2+25, height/2-40, 5, 0, 2*Math.PI);
+                    face_ctx.fill();
+                }else if(count==2){
+                    face_ctx.fillStyle = 'rgb(0,0,0)';
+                    face_ctx.beginPath();
+                    face_ctx.arc(width/2, height/2, 10, 0, 2*Math.PI);
+                    face_ctx.fill();
+                }else if(count==3){
+                    face_ctx.strokeStyle = 'rgb(0,0,0)';
+                    face_ctx.lineWidth = 2;
+                    face_ctx.beginPath();
+                    face_ctx.moveTo(width/2-50, height/2+20);
+                    face_ctx.quadraticCurveTo(width/2, height/2+70, 
+                    width/2+50, height/2+20);
+                    face_ctx.stroke();                
+                }
+                count++;
+            }
+
+        function eyecolor(){
+            let width = face_cnv.width;
+            let height = face_cnv.height;
+            if(counteye==0){
+            face_ctx.fillStyle = 'rgb(135,98,25)';
+                face_ctx.beginPath();
+                face_ctx.arc(width/2-25, height/2-40, 5, 0, 2*Math.PI);
+                face_ctx.fill();
+                face_ctx.beginPath();
+                face_ctx.arc(width/2+25, height/2-40, 5, 0, 2*Math.PI);
+                face_ctx.fill();
+            }else if(counteye==1){
+                face_ctx.fillStyle = 'rgb(79,178,12)';
+                face_ctx.beginPath();
+                face_ctx.arc(width/2-25, height/2-40, 5, 0, 2*Math.PI);
+                face_ctx.fill();
+                face_ctx.beginPath();
+                face_ctx.arc(width/2+25, height/2-40, 5, 0, 2*Math.PI);
+                face_ctx.fill();
+            }else if(counteye==2){
+                face_ctx.fillStyle = 'rgb(19,132,202)';
+                face_ctx.beginPath();
+                face_ctx.arc(width/2-25, height/2-40, 5, 0, 2*Math.PI);
+                face_ctx.fill();
+                face_ctx.beginPath();
+                face_ctx.arc(width/2+25, height/2-40, 5, 0, 2*Math.PI);
+                face_ctx.fill();
+                counteye=-1;
+            }
+            counteye++;
+        }
+
+        function nosecolor(){
+            let width = face_cnv.width;
+            let height = face_cnv.height;
+            if(countnose==0){
+                face_ctx.fillStyle = 'rgb(135,98,25)';
+                face_ctx.beginPath();
+                face_ctx.arc(width/2, height/2, 10, 0, 2*Math.PI);
+                face_ctx.fill();
+            }else if(countnose==1){
+                face_ctx.fillStyle = 'rgb(79,178,12)';
+                face_ctx.beginPath();
+                face_ctx.arc(width/2, height/2, 10, 0, 2*Math.PI);
+                face_ctx.fill();
+            }else if(countnose==2){
+                face_ctx.fillStyle = 'rgb(19,132,202)';
+                face_ctx.beginPath();
+                face_ctx.arc(width/2, height/2, 10, 0, 2*Math.PI);
+                face_ctx.fill();
+                countnose=-1;
+            }
+            countnose++;
+        }
+            function reset(){
+                face_ctx.fillStyle = 'rgb(173,216,230)';
+                face_ctx.fillRect(0, 0, face_cnv.width, face_cnv.height);
+                face_ctx.fillStyle = 'rgb(0,0,0)';
+                count=0;
+            }
+
+        //ANIMATION OF BALLS RACING
+        let animation_cnv = document.getElementById('animation_id');
+        let animation_ctx = animation_cnv.getContext('2d');
+        animation_ctx.fillStyle = 'black';
+        animation_ctx.fillRect(0, 0, animation_cnv.width, animation_cnv.height);
+        let width = animation_cnv.width;
+        let height = animation_cnv.height;
+        let ball_x = 0;
+        let ball_y = height/3;
+        let ball_ox = 0;
+        let ball_oy = height/3*2;
+        function resetAnimation(){
+            ball_x=0;
+            ball_ox=0;
+        }
+        function in_canvas(x,y){
+            return x >= 0 && x < width && y >= 0 && y < height;
+        }
+        function draw_ball(x, y){
+            animation_ctx.beginPath();
+            animation_ctx.arc(x, y, 25, 0, 2*Math.PI);
+            animation_ctx.fillStyle = 'yellow';
+            animation_ctx.fill();
+        }
+        function draw_oball(x, y){
+            animation_ctx.beginPath();
+            animation_ctx.arc(x, y, 25, 0, 2*Math.PI);
+            animation_ctx.fillStyle = 'orange';
+            animation_ctx.fill();
+        }
+        function new_frame() {
+            let dx, dy, ox, oy;
+            dx = 20;
+            ox = 19;
+            dy= 0;
+            oy=0;
+            if(!in_canvas(ball_x + dx, ball_y + dy)){
+                dx=0;
+                ox=0;
+            }
+            ball_x += dx;
+            ball_ox += ox;
+            animation_ctx.fillStyle = 'black';
+            animation_ctx.fillRect(0, 0, width, height);
+            draw_ball(ball_x, ball_y);
+            draw_oball(ball_ox, ball_oy);
+        }
+        setInterval(new_frame, 100);
+        </script>
+    </body>
+</html>
